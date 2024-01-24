@@ -54,14 +54,14 @@ const SidebarMenu: TwitterSidebarButton[]=[
 function Sidebar() {
   return (
     <div className='col-span-3  justify-start pt-5'>
-      <div  className='text-3xl flex h-fit hover:bg-gray-600 rounded-full p-2 cursor-pointer transition-all' >
+      <div  className='text-3xl flex h-fit w-fit hover:bg-gray-600 rounded-full p-2 cursor-pointer transition-all' >
       <FaXTwitter/>
       </div>
-      <div className='mt-4 text-2xl font-bold'>
+      <div className='mt-4 text-2xl font-bold pr-4'>
         <ul>
         {
           SidebarMenu.map((item)=>(
-          <li className='flex justify-start items-center gap-4 hover:bg-gray-800 rounded-full px-2 py-3 w-fit cursor-pointer mt-2' 
+          <li className='flex justify-start items-center gap-4 hover:bg-gray-800 rounded-full px-2 py-3 w-fit cursor-pointer ' 
           key={item.title}>
             <span>{item.icon}</span>
             <span>{item.title}</span>
@@ -69,6 +69,9 @@ function Sidebar() {
           ))
         }
         </ul>
+        <button className='bg-[#1C98EB] p-4 rounded-full w-full mt-5'>
+         Post
+        </button>
       </div>
     </div>
   )
