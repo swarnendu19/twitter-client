@@ -11,7 +11,7 @@ const FeedCard: React.FC =()=> {
         alt="user"
         width={50}
         height={50}
-         />
+        />
        </div>
       </div>
     </div>
