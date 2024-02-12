@@ -6,12 +6,7 @@ const FeedCard: React.FC =()=> {
     <div className='border'>
       <div className='grid grid-cols-12 '>
        <div className='col-span-4'>
-        <Image 
-        src="/myImage1.png"
-        alt="user"
-        width={50}
-        height={50}
-        />
+         
        </div>
       </div>
     </div>
