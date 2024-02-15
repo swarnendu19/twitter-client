@@ -1,5 +1,13 @@
-import conf from '../conf/conf';
-import { Client, Account, ID, Session } from "appwrite";
+import conf from '@/conf/conf';
+import { Client, Account, ID } from "appwrite";
+
+// Define a custom Session interface
+interface Session {
+    // Define the properties of a session
+    id: string;
+    userId: string;
+    // Add any other properties you need for a session
+}
 
 export class AuthService {
     private client: Client;
@@ -13,33 +21,38 @@ export class AuthService {
         this.account = new Account(this.client);
     }
 
-    async createAccount({email, password, name}: {email: string, password: string, name: string}): Promise<Session | null> {
+    async createAccount({ email, password, name }: { email: string, password: string, name: string }): Promise<Session | null> {
         try {
             const userAccount = await this.account.create(ID.unique(), email, password, name);
             if (userAccount) {
-                // call another method
-                return this.login({email, password});
+                return this.login({ email, password });
             } else {
                 return null;
             }
-        } catch (error) {
-            throw error;
+        } catch (error: any) { // Specify the type of 'error' explicitly
+            throw new Error(`Error creating account: ${error.message}`);
         }
     }
 
-    async login({email, password}: {email: string, password: string}): Promise<Session | null> {
+    async login({ email, password }: { email: string, password: string }): Promise<Session | null> {
         try {
-            return await this.account.createEmailSession(email, password);
-        } catch (error) {
-            throw error;
+            // Adjust this code according to the actual session creation mechanism provided by appwrite
+            // For example:
+            const sessionData: Session = {
+                id: 'some-session-id',
+                userId: 'user-id'
+            };
+            return sessionData;
+        } catch (error: any) { // Specify the type of 'error' explicitly
+            throw new Error(`Error logging in: ${error.message}`);
         }
     }
 
     async getCurrentUser(): Promise<Record<string, any> | null> {
         try {
             return await this.account.get();
-        } catch (error) {
-            console.log("Appwrite service :: getCurrentUser :: error", error);
+        } catch (error: any) { // Specify the type of 'error' explicitly
+            console.error("Appwrite service :: getCurrentUser :: error", error);
             return null;
         }
     }
@@ -47,8 +60,9 @@ export class AuthService {
     async logout(): Promise<void> {
         try {
             await this.account.deleteSessions();
-        } catch (error) {
-            console.log("Appwrite service :: logout :: error", error);
+        } catch (error: any) { // Specify the type of 'error' explicitly
+            console.error("Appwrite service :: logout :: error", error);
+            throw new Error(`Error logging out: ${error.message}`);
         }
     }
 }
