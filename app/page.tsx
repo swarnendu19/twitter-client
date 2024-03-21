@@ -1,12 +1,10 @@
-import FeedCard from "./components/FeedCard";
-import Sidebar from "./components/Sidebar";
+import Sidebar from "../components/Sidebar";
 
 export default function Home() {
   return (
       <div>
         <div className="grid grid-cols-12 h-screen w-screen px-56">
-         <Sidebar/>
-         <FeedCard/>
+          <Sidebar/>
         </div>
       </div>
   );
