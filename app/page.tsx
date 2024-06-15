@@ -2,12 +2,17 @@
 
 import FeedCard from "@/components/FeedCard";
 import Sidebar from "../components/Sidebar";
-import { GoogleLogin } from "@react-oauth/google";
+import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
 import { useCallback } from "react";
+import toast from "react-hot-toast";
+import { graphqlClient } from "@/clients/api";
+import { VerifyUserGoogleTokenDocument } from "@/gql/graphql";
 
 export default function Home() {
-  const handleLoginWithGoogle = useCallback((response: any) => {
-    console.log(response); // Handle the response here
+  const handleLoginWithGoogle = useCallback((cred: CredentialResponse) => {
+   const  googleToken = cred.credential
+   if(!googleToken) return toast.error(`Google token not found`);
+   const {verifyGoogleToken} = await graphqlClient.request(VerifyUserGoogleTokenDocument,{token:googleToken}) 
   }, []);
 
   return (
