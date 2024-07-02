@@ -9,10 +9,17 @@ import { graphqlClient } from "@/clients/api";
 import { VerifyUserGoogleTokenDocument } from "@/gql/graphql";
 
 export default function Home() {
-  const handleLoginWithGoogle = useCallback((cred: CredentialResponse) => {
-   const  googleToken = cred.credential
-   if(!googleToken) return toast.error(`Google token not found`);
-   const {verifyGoogleToken} = await graphqlClient.request(VerifyUserGoogleTokenDocument,{token:googleToken}) 
+  const handleLoginWithGoogle = useCallback(async (cred: CredentialResponse) => {
+    const googleToken = cred.credential;
+    if (!googleToken) return toast.error('Google token not found');
+    try {
+      const { verifyGoogleToken } = await graphqlClient.request(VerifyUserGoogleTokenDocument, { token: googleToken });
+      toast.success("Verified Success");
+      console.log(verifyGoogleToken);
+    } catch (error) {
+      toast.error("Verification failed");
+      console.error(error);
+    }
   }, []);
 
   return (
