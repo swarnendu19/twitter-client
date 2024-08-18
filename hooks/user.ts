@@ -4,8 +4,11 @@ import { useQuery } from "@tanstack/react-query";
 
 export const useCurrentUser = () => {
   const query = useQuery({
-    queryKey: ["curent-user"],
-    queryFn: () => graphqlClient.request(getCurrentUserQuery),
+    queryKey: ["current-user"],
+    queryFn: async () => {
+      const data = await graphqlClient.request(getCurrentUserQuery);
+      return data;
+    },
   });
 
   return { ...query, user: query.data?.getCurrentUser };
